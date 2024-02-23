@@ -1,0 +1,35 @@
+﻿using DiabeCare.Utilities;
+using Microsoft.Extensions.Logging;
+using Plugin.LocalNotification;
+using Mopups.Hosting;
+
+namespace DiabeCare
+{
+    public static class MauiProgram
+    {
+        public static MauiApp CreateMauiApp()
+        {
+            var builder = MauiApp.CreateBuilder();
+            builder
+                .UseMauiApp<App>()
+                .UseLocalNotification()
+                .ConfigureMopups()
+                .ConfigureFonts(fonts =>
+                {
+                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("Roboto-Black.ttf", "RobotoBlack");
+                    fonts.AddFont("Roboto-Bold.ttf", "RobotoBold");
+                    fonts.AddFont("Roboto-Medium.ttf", "RobotoMedium");
+                    fonts.AddFont("Roboto-Regular.ttf", "RobotoRegular");
+                });
+            FormHandler.RemoveBorders();
+
+#if DEBUG
+            builder.Logging.AddDebug();
+#endif
+
+            return builder.Build();
+        }
+    }
+}

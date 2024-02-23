@@ -1,0 +1,104 @@
+using DiabeCare.APIs;
+using DiabeCare.Models;
+using DiabeCare.Utilities;
+using Mopups.Services;
+using Newtonsoft.Json;
+
+namespace DiabeCare.Views;
+
+public partial class ActivityPage : ContentPage
+{
+    #region Objects
+    private ExerciseResponse exerciseResponse;
+    private Exercise mExercise;
+    private List<Exercise> mListExercises = new();
+    #endregion
+
+    #region Constructor
+    public ActivityPage()
+    {
+        InitializeComponent();
+    }
+    #endregion
+
+    #region Methods
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        var exerciseList = Preferences.Get("ExerciseList", string.Empty);
+        if (exerciseList.IsNotNullOrEmptyOrWhiteSpace())
+        {
+            mListExercises = JsonConvert.DeserializeObject<List<Exercise>>(exerciseList);
+        }
+    }
+    #endregion
+
+    #region Events
+    private async void Back_Tapped(object sender, TappedEventArgs e)
+    {
+        await Utilities.Utility.BounceImage((Image)sender);
+        await Navigation.PopAsync();
+    }
+
+    private async void Search_Tapped(object sender, TappedEventArgs e)
+    {
+        try
+        {
+            if (txtSearchActivity.Text.IsNullOrEmptyOrWhiteSpace())
+            {
+                await App.Current.MainPage.DisplayAlert("Alert!", "Activity is required.", "OK");
+            }
+            else if(txtDuration.Text.IsNullOrEmptyOrWhiteSpace())
+            {
+                await App.Current.MainPage.DisplayAlert("Alert!", "Duration is required.", "OK");
+            }
+            else
+            {
+                aiLoader.IsRunning = aiLoader.IsVisible = true;
+                await Task.Delay(500);
+                Query query = new()
+                {
+                    query = $"{txtDuration.Text} minutes {txtSearchActivity.Text}" 
+                };
+                exerciseResponse = await new ActivityAPI().GetNatutalExercise(query);
+                if (exerciseResponse != null && exerciseResponse.exercises != null && exerciseResponse.exercises.Count > 0)
+                {
+                    mExercise = exerciseResponse.exercises.FirstOrDefault();
+                    mExercise.Date = DateTime.Now.ToString("dd/MM/yyyy");
+                    txtSearchActivity.Text = mExercise.name;
+                    txtDuration.Text = Convert.ToString(mExercise.duration_min);
+                    lblCalories.Text = $"{mExercise.nf_calories} Kcal Burned";
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Alert!", $"Search Event - {ex.Message}", "OK");
+        }
+        finally
+        {
+            aiLoader.IsRunning = aiLoader.IsVisible = false;
+        }
+    }
+
+    private async void BtnSave_Clicked(object sender, EventArgs e)
+    {
+        if (mExercise != null && mExercise.tag_id > 0)
+        {
+            await Utilities.Utility.BounceButton((Button)sender);
+            mListExercises.Add(mExercise);
+            string serializeList = JsonConvert.SerializeObject(mListExercises);
+            Preferences.Set("ExerciseList", serializeList);
+            mExercise = new();
+            txtSearchActivity.Text = 
+            txtDuration.Text = 
+            lblCalories.Text = string.Empty;
+            await App.Current.MainPage.DisplayAlert("Alert!", "Activity saved successfully.", "OK");
+        }
+        else
+        {
+            await App.Current.MainPage.DisplayAlert("Alert!", "No activity found to save.", "OK");
+        }
+    } 
+    #endregion
+}

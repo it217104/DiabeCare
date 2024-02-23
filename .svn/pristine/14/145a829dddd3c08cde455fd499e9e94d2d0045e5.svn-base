@@ -1,0 +1,35 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DiabeCare.Utilities
+{
+    public static class Utility
+    {
+        public static async Task BounceButton(Button button)
+        {
+            await button.ScaleTo(0.75, 100);
+            await button.ScaleTo(1, 100);
+        }
+
+        public static async Task BounceBorder(Border border)
+        {
+            await border.ScaleTo(0.75, 100);
+            await border.ScaleTo(1, 100);
+        }
+
+        public static async Task BounceImage(Image image)
+        {
+            await image.ScaleTo(0.75, 100);
+            await image.ScaleTo(1, 100);
+        }
+
+        public static async Task BounceHorizontalSL(HorizontalStackLayout hsl)
+        {
+            await hsl.ScaleTo(0.75, 100);
+            await hsl.ScaleTo(1, 100);
+        }
+    }
+}

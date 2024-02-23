@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="DiabeCare.Views.Signup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:DiabeCare.Localization"
+    Title="Signup">
+
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10">
+
+        <Label
+            Grid.Row="0"
+            FontAttributes="Bold"
+            FontSize="50"
+            HorizontalOptions="Center"
+            Text="DiabeCare"
+            TextColor="{DynamicResource Magenta}"
+            VerticalOptions="Center" />
+
+        <VerticalStackLayout
+            Grid.Row="1"
+            Margin="20,0"
+            Spacing="10">
+
+            <Label
+                Margin="10,0,0,0"
+                HorizontalOptions="Start"
+                Text="{local:Translate lblUsername}" />
+
+            <Border
+                BackgroundColor="{DynamicResource Gray100}"
+                Stroke="{DynamicResource Magenta}"
+                StrokeThickness="2">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+                <Entry
+                    HorizontalOptions="FillAndExpand"
+                    Placeholder="{local:Translate lblUsername}"
+                    VerticalOptions="CenterAndExpand" />
+            </Border>
+
+        </VerticalStackLayout>
+
+        <VerticalStackLayout
+            Grid.Row="2"
+            Margin="20,0"
+            Spacing="10">
+
+            <Label
+                Margin="10,0,0,0"
+                HorizontalOptions="Start"
+                Text="{local:Translate lblEmail}" />
+
+            <Border
+                BackgroundColor="{DynamicResource Gray100}"
+                Stroke="{DynamicResource Magenta}"
+                StrokeThickness="2">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+                <Entry
+                    HorizontalOptions="FillAndExpand"
+                    Placeholder="{local:Translate lblEmail}"
+                    VerticalOptions="CenterAndExpand" />
+            </Border>
+
+        </VerticalStackLayout>
+
+        <VerticalStackLayout
+            Grid.Row="3"
+            Margin="20,0"
+            Spacing="10">
+
+            <Label
+                Margin="10,0,0,0"
+                HorizontalOptions="Start"
+                Text="{local:Translate lblDob}" />
+
+            <Border
+                BackgroundColor="{DynamicResource Gray100}"
+                Stroke="{DynamicResource Magenta}"
+                StrokeThickness="2">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+                <Grid>
+                    <Label
+                        Margin="10,0,0,0"
+                        HorizontalOptions="Start"
+                        Text="{local:Translate lblDob}"
+                        VerticalOptions="CenterAndExpand" />
+
+                    <DatePicker HorizontalOptions="FillAndExpand" Opacity="0" />
+
+                </Grid>
+            </Border>
+
+        </VerticalStackLayout>
+
+        <Grid
+            Grid.Row="4"
+            Margin="20,0"
+            ColumnDefinitions="*,*,*"
+            ColumnSpacing="20">
+
+            <VerticalStackLayout
+                Grid.Column="0"
+                Margin="0"
+                Spacing="10">
+
+                <Label
+                    Margin="10,0,0,0"
+                    HorizontalOptions="Start"
+                    Text="{local:Translate lblAge}" />
+
+                <Border
+                    BackgroundColor="{DynamicResource Gray100}"
+                    Stroke="{DynamicResource Magenta}"
+                    StrokeThickness="2">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <Entry
+                        HorizontalOptions="FillAndExpand"
+                        Placeholder="{local:Translate lblAge}"
+                        VerticalOptions="CenterAndExpand" />
+                </Border>
+
+            </VerticalStackLayout>
+
+            <VerticalStackLayout
+                Grid.Column="1"
+                Margin="0"
+                Spacing="10">
+
+                <Label
+                    Margin="10,0,0,0"
+                    HorizontalOptions="Start"
+                    Text="{local:Translate lblHeight}" />
+
+                <Border
+                    BackgroundColor="{DynamicResource Gray100}"
+                    Stroke="{DynamicResource Magenta}"
+                    StrokeThickness="2">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <Entry
+                        HorizontalOptions="FillAndExpand"
+                        Placeholder="{local:Translate lblHeight}"
+                        VerticalOptions="CenterAndExpand" />
+                </Border>
+
+            </VerticalStackLayout>
+
+            <VerticalStackLayout
+                Grid.Column="2"
+                Margin="0"
+                Spacing="10">
+
+                <Label
+                    Margin="10,0,0,0"
+                    HorizontalOptions="Start"
+                    Text="{local:Translate lblWeight}" />
+
+                <Border
+                    BackgroundColor="{DynamicResource Gray100}"
+                    Stroke="{DynamicResource Magenta}"
+                    StrokeThickness="2">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <Entry
+                        HorizontalOptions="FillAndExpand"
+                        Placeholder="{local:Translate lblWeight}"
+                        VerticalOptions="CenterAndExpand" />
+                </Border>
+
+            </VerticalStackLayout>
+
+        </Grid>
+
+        <VerticalStackLayout
+            Grid.Row="5"
+            Margin="20,0"
+            Spacing="10">
+
+            <Label
+                Margin="10,0,0,0"
+                HorizontalOptions="Start"
+                Text="{local:Translate lblDiabetesType}" />
+
+            <Border
+                BackgroundColor="{DynamicResource Gray100}"
+                Stroke="{DynamicResource Magenta}"
+                StrokeThickness="2">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+                <Picker HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
+                    <Picker.Items>
+                        <x:String>Type A</x:String>
+                        <x:String>Type B</x:String>
+                        <x:String>Prediabetes</x:String>
+                        <x:String>None of above</x:String>
+                    </Picker.Items>
+                </Picker>
+            </Border>
+
+        </VerticalStackLayout>
+
+        <VerticalStackLayout
+            Grid.Row="6"
+            Margin="20,0"
+            Spacing="10">
+
+            <Label
+                Margin="10,0,0,0"
+                HorizontalOptions="Start"
+                Text="{local:Translate lblPassword}" />
+
+            <Border
+                BackgroundColor="{DynamicResource Gray100}"
+                Stroke="{DynamicResource Magenta}"
+                StrokeThickness="2">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+                <Entry
+                    HorizontalOptions="FillAndExpand"
+                    IsPassword="True"
+                    Placeholder="{local:Translate lblPassword}"
+                    VerticalOptions="CenterAndExpand" />
+            </Border>
+
+        </VerticalStackLayout>
+
+        <Button
+            Grid.Row="7"
+            Padding="100,0"
+            BackgroundColor="{DynamicResource Magenta}"
+            FontAttributes="Bold"
+            FontSize="22"
+            HorizontalOptions="CenterAndExpand"
+            Text="{local:Translate lblSignUp}"
+            TextColor="{DynamicResource White}" />
+
+    </Grid>
+
+</ContentPage>

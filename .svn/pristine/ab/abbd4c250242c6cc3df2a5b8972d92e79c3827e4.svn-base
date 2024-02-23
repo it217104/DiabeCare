@@ -1,0 +1,25 @@
+namespace DiabeCare.Views;
+
+public partial class ActivityPage : ContentPage
+{
+	public ActivityPage()
+	{
+		InitializeComponent();
+	}
+
+    private async void Back_Tapped(object sender, TappedEventArgs e)
+    {
+        await Utilities.Utility.BounceImage((Image)sender);
+        await Navigation.PopAsync();
+    }
+
+    private void Search_Tapped(object sender, TappedEventArgs e)
+    {
+
+    }
+
+    private async void BtnSave_Clicked(object sender, EventArgs e)
+    {
+        await Utilities.Utility.BounceButton((Button)sender);
+    }
+}

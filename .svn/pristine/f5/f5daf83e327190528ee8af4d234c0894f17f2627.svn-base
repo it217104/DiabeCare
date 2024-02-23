@@ -1,0 +1,12 @@
+﻿namespace DiabeCare.APIs
+{
+    public class UrlAndEndpoints
+    {
+        public const string BaseURL = "https://trackapi.nutritionix.com/v2/";
+
+        public static string NaturalNutrients = "natural/nutrients";
+        public static string SearchInstant = "search/instant/?query=";
+        public static string SearchItem = "search/item/?upc=";
+        public static string NaturalExercise = "natural/exercise";
+    }
+}

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="DiabeCare.Views.Home"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:DiabeCare.Localization"
+    Title="Home"
+    NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="*,Auto,Auto,50,Auto" RowSpacing="10">
+
+        <Image
+            Grid.Row="0"
+            Margin="0,10,10,0"
+            HeightRequest="30"
+            HorizontalOptions="End"
+            Source="icon_logout.png"
+            VerticalOptions="Start"
+            WidthRequest="30">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Logout_Tapped" />
+            </Image.GestureRecognizers>
+        </Image>
+
+        <Label
+            Grid.Row="0"
+            FontFamily="RobotoBlack"
+            FontSize="50"
+            HorizontalOptions="Center"
+            Text="{local:Translate lblAppName}"
+            TextColor="{DynamicResource Magenta}"
+            VerticalOptions="Center" />
+
+        <Grid
+            Grid.Row="1"
+            Margin="20"
+            ColumnDefinitions="Auto,*"
+            RowDefinitions="Auto,Auto">
+
+            <Image
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Margin="0"
+                HeightRequest="30"
+                HorizontalOptions="Start"
+                Source="icon_user.png"
+                VerticalOptions="Center"
+                WidthRequest="30" />
+
+            <HorizontalStackLayout
+                Grid.Row="0"
+                Grid.Column="1"
+                HorizontalOptions="CenterAndExpand">
+
+                <Label
+                    Margin="0"
+                    FontFamily="RobotoRegular"
+                    HorizontalOptions="EndAndExpand"
+                    Text="{local:Translate lblTotalCaloriesBurnedToday}" />
+
+                <Label
+                    x:Name="lblCaloriesBurned"
+                    Margin="0"
+                    FontFamily="RobotoRegular"
+                    HorizontalOptions="StartAndExpand" />
+
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout
+                Grid.Row="1"
+                Grid.Column="1"
+                HorizontalOptions="CenterAndExpand">
+
+                <Label
+                    Margin="0"
+                    FontFamily="RobotoRegular"
+                    HorizontalOptions="EndAndExpand"
+                    Text="{local:Translate lblTotalExerciseTime}" />
+
+                <Label
+                    x:Name="lblExerciseTime"
+                    Grid.Row="1"
+                    Margin="0"
+                    FontFamily="RobotoRegular"
+                    HorizontalOptions="StartAndExpand" />
+
+            </HorizontalStackLayout>
+
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <CollectionView
+                x:Name="cvMenus"
+                Margin="10,0"
+                ItemsLayout="VerticalGrid, 3">
+
+                <CollectionView.ItemTemplate>
+
+                    <DataTemplate>
+
+                        <Border
+                            Margin="5"
+                            Padding="5"
+                            BackgroundColor="{DynamicResource White}"
+                            Stroke="{DynamicResource Magenta}"
+                            StrokeThickness="2">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10" />
+                            </Border.StrokeShape>
+
+                            <VerticalStackLayout
+                                HorizontalOptions="CenterAndExpand"
+                                Spacing="0"
+                                VerticalOptions="Center">
+
+                                <Image
+                                    Margin="20"
+                                    HeightRequest="70"
+                                    HorizontalOptions="Center"
+                                    Source="{Binding ImageSource}"
+                                    VerticalOptions="Center"
+                                    WidthRequest="70" />
+
+                                <Label
+                                    Margin="0"
+                                    FontFamily="RobotoRegular"
+                                    HorizontalOptions="Center"
+                                    Text="{Binding MenuName}"
+                                    VerticalOptions="Center" />
+
+                            </VerticalStackLayout>
+
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Menu_Tapped" />
+                            </Border.GestureRecognizers>
+                        </Border>
+
+                    </DataTemplate>
+
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+        </Grid>
+
+        <!--<Image
+            Grid.Row="3"
+            Margin="20,5"
+            HeightRequest="50"
+            HorizontalOptions="Start"
+            Source="icon_chat.png"
+            VerticalOptions="Center"
+            WidthRequest="50" />-->
+
+        <Label
+            Grid.Row="4"
+            Margin="20,10"
+            FontFamily="RobotoRegular"
+            HorizontalOptions="CenterAndExpand"
+            HorizontalTextAlignment="Center"
+            LineBreakMode="WordWrap"
+            Text="{local:Translate lblTips}"
+            TextColor="{DynamicResource Magenta}" />
+
+    </Grid>
+
+</ContentPage>

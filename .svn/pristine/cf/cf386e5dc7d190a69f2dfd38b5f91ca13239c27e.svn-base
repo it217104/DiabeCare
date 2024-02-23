@@ -1,0 +1,108 @@
+using DiabeCare.Models;
+using DiabeCare.Resources.Languages;
+using DiabeCare.Utilities;
+using Newtonsoft.Json;
+using System.Collections.ObjectModel;
+
+namespace DiabeCare.Views;
+
+public partial class Home : ContentPage
+{
+    #region Objects
+    private List<Exercise> mListExercises = new();
+    private List<FoodData> mFoodDatas = new();
+    #endregion
+
+    public Home()
+    {
+        InitializeComponent();
+    }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        var menus = new ObservableCollection<Models.HomeMenu>()
+        {
+            new(){ MenuName = AppResource.lblAddActivity, ImageSource = "icon_heartrate.png", ContentPage = new ActivityPage() },
+            new(){ MenuName = AppResource.lblAddWeight, ImageSource = "icon_weighscale.png", ContentPage = new WeightPage() },
+            new(){ MenuName = AppResource.lblAddFood, ImageSource = "icon_dish.png", ContentPage = new FoodPage() },
+            new(){ MenuName = AppResource.lblAddMedicine, ImageSource = "icon_pills.png", ContentPage = new MedicinePage() },
+            new(){ MenuName = AppResource.lblAddGlucose, ImageSource = "icon_glucose.png", ContentPage = new GlucosePage() },
+            new(){ MenuName = AppResource.lblCalendar, ImageSource = "icon_calendar.png"}
+        };
+        cvMenus.ItemsSource = menus;
+
+        await CaloriesCalculation();
+    }
+
+    public async Task CaloriesCalculation()
+    {
+        try
+        {
+            int totalDuration = 0;
+            double totalCalories = 0;
+            double totalFoodCalories = 0;
+            var exerciseList = Preferences.Get("ExerciseList", string.Empty);
+            if (exerciseList.IsNotNullOrEmptyOrWhiteSpace())
+            {
+                mListExercises = new();
+                mListExercises = JsonConvert.DeserializeObject<List<Exercise>>(exerciseList);
+                if (mListExercises != null && mListExercises.Count > 0)
+                {
+                    foreach (var exercise in mListExercises.Where(x => x.Date == DateTime.Now.ToString("dd/MM/yyyy")))
+                    {
+                        totalDuration += exercise.duration_min;
+                        totalCalories += exercise.nf_calories;
+                    }
+                }
+            }
+
+            var foodList = Preferences.Get("FoodList", string.Empty);
+            if (foodList.IsNotNullOrEmptyOrWhiteSpace())
+            {
+                mFoodDatas = JsonConvert.DeserializeObject<List<FoodData>>(foodList);
+                foreach (var food in mFoodDatas.Where(x => x.FoodDate == DateTime.Now.ToString("dd/MM/yyyy")))
+                {
+                    totalFoodCalories += food.FoodCalories;
+                }
+            }
+
+            lblCaloriesBurned.Text = $"{totalCalories}";
+            lblExerciseTime.Text = $"{totalDuration} min";
+            lblCalorieIntakeForToday.Text = $"{totalFoodCalories}";
+            lblTodaysCalories.Text = $"{totalCalories + totalFoodCalories}";
+        }
+        catch (Exception ex)
+        {
+            await Application.Current.MainPage.DisplayAlert(AppResource.lblError, $"{ex.Message}", AppResource.btnOk);
+        }
+    }
+
+    private async void Logout_Tapped(object sender, TappedEventArgs e)
+    {
+        await Utilities.Utility.BounceImage((Image)sender);
+        var result = await Application.Current.MainPage.DisplayAlert(AppResource.lblConfirm, AppResource.msgLogout, AppResource.btnYes, AppResource.btnNo);
+        if (result)
+        {
+            Utilities.Utility.mUserDetail = null;
+            App.Current.MainPage = new NavigationPage(new Login());
+        }
+    }
+
+    private async void Menu_Tapped(object sender, TappedEventArgs e)
+    {
+        try
+        {
+            var homeMenu = ((Border)sender).BindingContext as Models.HomeMenu;
+            if (homeMenu != null && homeMenu.ContentPage != null)
+            {
+                await Utilities.Utility.BounceBorder((Border)sender);
+                await Navigation.PushAsync(homeMenu.ContentPage);
+            }
+        }
+        catch (Exception ex)
+        {
+            await Application.Current.MainPage.DisplayAlert(AppResource.lblError, $"{ex.Message}", AppResource.btnOk);
+        }
+    }
+}

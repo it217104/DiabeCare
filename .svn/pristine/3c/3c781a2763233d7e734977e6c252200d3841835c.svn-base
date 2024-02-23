@@ -1,0 +1,126 @@
+using DiabeCare.Models;
+using Plugin.LocalNotification;
+using System.Globalization;
+using System;
+
+namespace DiabeCare.Views;
+
+public partial class NotificationPage : ContentPage
+{
+    #region Objects
+    private ConceptProperties mConceptProperties;
+    #endregion
+
+    public NotificationPage(ConceptProperties mConceptProperties)
+	{
+		InitializeComponent();
+        this.mConceptProperties = mConceptProperties;
+	}
+
+    #region Methods
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        for (int i = 1; i <= 24; i++)
+        {
+            pkhour.Items.Add($"{i}");
+        }
+
+        for (int i = 1; i <= 60; i++)
+        {
+            pkMinute.Items.Add($"{i}");
+        }
+
+        var month = DateTime.Now.Month;
+        var year = DateTime.Now.Year;
+        var day = DateTime.DaysInMonth(year,month);
+        for (int i = 1; i <= day; i++)
+        {
+            pkDay.Items.Add($"{i}");
+        }
+        pkMonth.SelectedItem = new DateTime(year, month, 1).ToString("MMMM");
+        pkDay.SelectedItem = day;
+        pkhour.SelectedItem = DateTime.Now.ToString("HH");
+        pkMinute.SelectedItem = DateTime.Now.ToString("mm");
+    }
+    #endregion
+
+    private async void Back_Tapped(object sender, TappedEventArgs e)
+    {
+        await Utilities.Utility.BounceImage((Image)sender);
+        await Navigation.PopAsync();
+    }
+
+    private void Down_Tapped(object sender, TappedEventArgs e)
+    {
+
+    }
+
+    private async void BtnSave_Clicked(object sender, EventArgs e)
+    {
+        try
+        {
+            await Utilities.Utility.BounceButton((Button)sender);
+            var month = DateTime.ParseExact(txtMonth.Text, "MMMM", CultureInfo.CurrentCulture).Month;
+            var date = $"{txtDay.Text}/{month}/{DateTime.Now.Year}";
+            var time = $"{txtHour}:{txtMinute}";
+            var datetime = $"{date} {time}";
+            var NotifyDateTime = DateTime.ParseExact(datetime, "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
+            NotificationRepeat notificationRepeat = new();
+            var interval = 0;
+            if (pkPeriod.SelectedIndex == 0)
+            {
+                notificationRepeat = NotificationRepeat.Daily;
+                interval = 1;
+            }
+            else
+            {
+                notificationRepeat = NotificationRepeat.Weekly;
+                interval = 7;
+            }
+
+            var request = new NotificationRequest
+            {
+                NotificationId = 1000,
+                Title = "Medicine Reminder",
+                Subtitle = $"{mConceptProperties.Synonym}",
+                Description = $"{mConceptProperties.Name}",
+                BadgeNumber = 42,
+                Schedule = new NotificationRequestSchedule
+                {
+                    NotifyTime = NotifyDateTime,
+                    RepeatType = notificationRepeat,
+                    NotifyRepeatInterval = TimeSpan.FromDays(interval)
+                }
+            };
+            _ = LocalNotificationCenter.Current.Show(request);
+            await App.Current.MainPage.DisplayAlert("Success :)", "Medicine alert added.", "OK");
+            await Navigation.PopAsync();
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Alert!", $"BtnSave_Clicked - {ex.Message}", "OK");
+        }
+    }
+
+    private void PkDay_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        txtDay.Text = pkDay.SelectedItem.ToString();
+    }
+
+    private void PkMinute_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        txtMinute.Text = pkMinute.SelectedItem.ToString();
+    }
+
+    private void Pkhour_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        txtHour.Text = pkhour.SelectedItem.ToString();
+    }
+
+    private void PkMonth_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        txtMonth.Text = pkMonth.SelectedItem.ToString();
+    }
+}

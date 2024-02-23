@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="DiabeCare.Views.MedicinePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:DiabeCare.Localization"
+    Title="MedicinePage"
+    NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="50,*">
+
+        <Image
+            Grid.Row="0"
+            Margin="20,0,0,0"
+            HeightRequest="30"
+            HorizontalOptions="Start"
+            Source="icon_backarrow.png"
+            VerticalOptions="Center"
+            WidthRequest="30">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Back_Tapped" />
+            </Image.GestureRecognizers>
+        </Image>
+
+        <Label
+            Grid.Row="0"
+            Margin="0"
+            FontFamily="RobotoMedium"
+            FontSize="25"
+            HorizontalOptions="CenterAndExpand"
+            Text="{local:Translate lblMedicine}"
+            TextColor="{DynamicResource Magenta}"
+            VerticalOptions="Center" />
+
+        <Grid
+            Grid.Row="1"
+            RowDefinitions="*,Auto,*"
+            RowSpacing="10">
+
+            <Label
+                Grid.Row="0"
+                FontFamily="RobotoBold"
+                FontSize="50"
+                HorizontalOptions="Center"
+                Text="{local:Translate lblAppName}"
+                TextColor="{DynamicResource Magenta}"
+                VerticalOptions="Center" />
+
+            <Grid
+                Grid.Row="1"
+                RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+                RowSpacing="20">
+
+                <VerticalStackLayout
+                    Grid.Row="0"
+                    Margin="20,0"
+                    Spacing="10">
+
+                    <Label
+                        Margin="10,0,0,0"
+                        FontFamily="RobotoRegular"
+                        HorizontalOptions="Start"
+                        Text="{local:Translate lblMedicine}" />
+
+                    <Border
+                        Padding="10,0"
+                        BackgroundColor="{DynamicResource Gray100}"
+                        Stroke="{DynamicResource Magenta}"
+                        StrokeThickness="2">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="5">
+
+                            <Entry
+                                x:Name="txtSearchMedicine"
+                                Grid.Column="0"
+                                FontFamily="RobotoRegular"
+                                HorizontalOptions="FillAndExpand"
+                                Placeholder="{local:Translate phSearchMedicine}"
+                                VerticalOptions="CenterAndExpand" />
+
+                            <Image
+                                Grid.Column="1"
+                                Margin="0"
+                                HeightRequest="25"
+                                HorizontalOptions="Start"
+                                Source="icon_search.png"
+                                VerticalOptions="Center"
+                                WidthRequest="25">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Search_Tapped" />
+                                </Image.GestureRecognizers>
+                            </Image>
+
+                        </Grid>
+                    </Border>
+
+                </VerticalStackLayout>
+
+                <VerticalStackLayout
+                    Grid.Row="1"
+                    Margin="20,0"
+                    Spacing="10">
+
+                    <Label
+                        Margin="10,0,0,0"
+                        FontFamily="RobotoRegular"
+                        HorizontalOptions="Start"
+                        Text="{local:Translate lblMedicineName}" />
+
+                    <Border
+                        Padding="10,0"
+                        BackgroundColor="{DynamicResource Gray100}"
+                        Stroke="{DynamicResource Magenta}"
+                        StrokeThickness="2">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="5">
+
+                            <Entry
+                                x:Name="txtMedicine"
+                                Grid.Column="0"
+                                FontFamily="RobotoRegular"
+                                HorizontalOptions="FillAndExpand"
+                                IsReadOnly="True"
+                                Placeholder="{local:Translate lblMedicineName}"
+                                VerticalOptions="CenterAndExpand" />
+
+                        </Grid>
+                    </Border>
+
+                </VerticalStackLayout>
+
+                <VerticalStackLayout
+                    Grid.Row="2"
+                    Margin="20,0"
+                    Spacing="10">
+
+                    <Label
+                        Margin="10,0,0,0"
+                        FontFamily="RobotoRegular"
+                        HorizontalOptions="Start"
+                        Text="{local:Translate lblFrequency}" />
+
+                    <Border
+                        Padding="10,0"
+                        BackgroundColor="{DynamicResource Gray100}"
+                        Stroke="{DynamicResource Magenta}"
+                        StrokeThickness="2">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="5">
+
+                            <Entry
+                                x:Name="txtFrquency"
+                                Grid.Column="0"
+                                FontFamily="RobotoRegular"
+                                HorizontalOptions="FillAndExpand"
+                                Keyboard="Numeric"
+                                Placeholder="{local:Translate lblFrequency}"
+                                VerticalOptions="CenterAndExpand" />
+
+                        </Grid>
+                    </Border>
+
+                </VerticalStackLayout>
+
+                <VerticalStackLayout
+                    Grid.Row="3"
+                    Margin="20,0"
+                    Spacing="10">
+
+                    <Label
+                        Margin="10,0,0,0"
+                        FontFamily="RobotoRegular"
+                        HorizontalOptions="Start"
+                        Text="{local:Translate lblPeriod}" />
+
+                    <Border
+                        Padding="10,0"
+                        BackgroundColor="{DynamicResource Gray100}"
+                        Stroke="{DynamicResource Magenta}"
+                        StrokeThickness="2">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Picker
+                                x:Name="pkPeriod"
+                                FontFamily="RobotoRegular"
+                                HorizontalOptions="FillAndExpand"
+                                SelectedIndex="0"
+                                VerticalOptions="CenterAndExpand">
+                                <Picker.Items>
+                                    <x:String>Day</x:String>
+                                    <x:String>Week</x:String>
+                                    <x:String>Month</x:String>
+                                </Picker.Items>
+                            </Picker>
+
+                            <Image
+                                Grid.Column="1"
+                                Margin="0"
+                                HeightRequest="25"
+                                HorizontalOptions="Start"
+                                Source="icon_down.png"
+                                VerticalOptions="Center"
+                                WidthRequest="25">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Down_Tapped" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </Grid>
+                    </Border>
+
+                </VerticalStackLayout>
+
+                <Grid
+                    Grid.Row="4"
+                    Margin="20"
+                    ColumnDefinitions="Auto,*"
+                    ColumnSpacing="10">
+
+                    <Image
+                        Grid.Column="0"
+                        Margin="0"
+                        HeightRequest="50"
+                        HorizontalOptions="Start"
+                        Source="icon_bell.png"
+                        VerticalOptions="Center"
+                        WidthRequest="50" />
+
+                    <Label
+                        Grid.Column="1"
+                        Margin="0"
+                        FontFamily="RobotoRegular"
+                        HorizontalOptions="StartAndExpand"
+                        HorizontalTextAlignment="Center"
+                        LineBreakMode="WordWrap"
+                        Text="{local:Translate lblAlertMedicine}"
+                        VerticalOptions="CenterAndExpand" />
+
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Notification_Tapped" />
+                    </Grid.GestureRecognizers>
+                </Grid>
+
+            </Grid>
+
+            <Button
+                Grid.Row="3"
+                Margin="50,0,50,10"
+                BackgroundColor="{DynamicResource Magenta}"
+                Clicked="BtnSave_Clicked"
+                FontFamily="RobotoBold"
+                FontSize="22"
+                HorizontalOptions="FillAndExpand"
+                Text="{local:Translate btnSave}"
+                TextColor="{DynamicResource White}"
+                VerticalOptions="CenterAndExpand" />
+
+        </Grid>
+
+        <ActivityIndicator
+            x:Name="aiLoader"
+            Grid.RowSpan="2"
+            HorizontalOptions="CenterAndExpand"
+            IsRunning="False"
+            IsVisible="False"
+            VerticalOptions="CenterAndExpand"
+            Color="{DynamicResource Magenta}" />
+
+    </Grid>
+
+</ContentPage>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="DiabeCare.Views.Login"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:DiabeCare.Localization"
+    Title="Login">
+    <Grid RowDefinitions="*,Auto,*">
+
+        <Label
+            Grid.Row="0"
+            FontAttributes="Bold"
+            FontSize="50"
+            HorizontalOptions="Center"
+            Text="DiabeCare"
+            TextColor="{DynamicResource Magenta}"
+            VerticalOptions="Center" />
+
+        <Grid
+            Grid.Row="1"
+            RowDefinitions="*,*"
+            RowSpacing="40">
+
+            <VerticalStackLayout
+                Grid.Row="0"
+                Margin="20,0"
+                Spacing="10">
+
+                <Label
+                    Margin="10,0,0,0"
+                    HorizontalOptions="Start"
+                    Text="{local:Translate lblUsername}" />
+
+                <Border
+                    BackgroundColor="{DynamicResource Gray100}"
+                    Stroke="{DynamicResource Magenta}"
+                    StrokeThickness="2">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <Entry
+                        HorizontalOptions="FillAndExpand"
+                        Placeholder="{local:Translate lblUsername}"
+                        VerticalOptions="CenterAndExpand" />
+                </Border>
+
+            </VerticalStackLayout>
+
+            <VerticalStackLayout
+                Grid.Row="1"
+                Margin="20,0"
+                Spacing="10">
+
+                <Label
+                    Margin="10,0,0,0"
+                    HorizontalOptions="Start"
+                    Text="{local:Translate lblPassword}" />
+
+                <Border
+                    BackgroundColor="{DynamicResource Gray100}"
+                    Stroke="{DynamicResource Magenta}"
+                    StrokeThickness="2">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <Entry
+                        HorizontalOptions="FillAndExpand"
+                        IsPassword="True"
+                        Placeholder="{local:Translate lblPassword}"
+                        VerticalOptions="CenterAndExpand" />
+                </Border>
+
+            </VerticalStackLayout>
+
+
+        </Grid>
+
+        <Grid
+            Grid.Row="2"
+            RowDefinitions="Auto,Auto,*"
+            RowSpacing="10">
+
+            <HorizontalStackLayout Margin="50,20,0,20" Spacing="0">
+
+                <CheckBox BackgroundColor="{DynamicResource Magenta}" Color="{DynamicResource Magenta}" />
+
+                <Label
+                    Margin="0"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Start"
+                    Text="{local:Translate lblRememberMe}"
+                    TextColor="{DynamicResource Magenta}"
+                    VerticalOptions="CenterAndExpand" />
+
+            </HorizontalStackLayout>
+
+            <Button
+                Grid.Row="1"
+                Padding="100,0"
+                BackgroundColor="{DynamicResource Magenta}"
+                FontAttributes="Bold"
+                FontSize="22"
+                HorizontalOptions="CenterAndExpand"
+                Text="{local:Translate btnLogin}"
+                TextColor="{DynamicResource White}" />
+
+            <HorizontalStackLayout
+                Grid.Row="2"
+                HorizontalOptions="CenterAndExpand"
+                Spacing="5"
+                VerticalOptions="Start">
+
+                <Label
+                    Margin="0"
+                    HorizontalOptions="Start"
+                    Text="{local:Translate lblDontHaveAnAccountYet}"
+                    TextColor="{DynamicResource Black}"
+                    VerticalOptions="CenterAndExpand" />
+
+                <Label
+                    Margin="0"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Start"
+                    Text="{local:Translate lblSignUp}"
+                    TextColor="{DynamicResource Magenta}"
+                    VerticalOptions="CenterAndExpand" />
+
+            </HorizontalStackLayout>
+
+        </Grid>
+
+    </Grid>
+</ContentPage>

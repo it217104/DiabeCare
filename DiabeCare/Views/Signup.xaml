@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="DiabeCare.Views.Signup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:DiabeCare.Localization"
+    Title="Signup"
+    NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="50,*">
+
+        <Image
+            Grid.Row="0"
+            Margin="20,0,0,0"
+            HeightRequest="30"
+            HorizontalOptions="Start"
+            Source="icon_backarrow.png"
+            VerticalOptions="Center"
+            WidthRequest="30">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Back_Tapped" />
+            </Image.GestureRecognizers>
+        </Image>
+
+        <Label
+            Grid.Row="0"
+            Margin="0"
+            FontFamily="RobotoMedium"
+            FontSize="25"
+            HorizontalOptions="CenterAndExpand"
+            Text="{local:Translate lblSignUp}"
+            TextColor="{DynamicResource Magenta}"
+            VerticalOptions="Center" />
+
+        <ScrollView
+            Grid.Row="1"
+            HorizontalScrollBarVisibility="Never"
+            VerticalScrollBarVisibility="Never">
+
+            <Grid RowDefinitions="*,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10">
+
+                <Label
+                    Grid.Row="0"
+                    FontFamily="RobotoBold"
+                    FontSize="50"
+                    HorizontalOptions="Center"
+                    Text="{local:Translate lblAppName}"
+                    TextColor="{DynamicResource Magenta}"
+                    VerticalOptions="Center" />
+
+                <VerticalStackLayout
+                    Grid.Row="1"
+                    Margin="20,0"
+                    Spacing="10">
+
+                    <Label
+                        Margin="10,0,0,0"
+                        FontFamily="RobotoRegular"
+                        HorizontalOptions="Start"
+                        Text="{local:Translate lblUsername}" />
+
+                    <Border
+                        Padding="10,0"
+                        BackgroundColor="{DynamicResource Gray100}"
+                        Stroke="{DynamicResource Magenta}"
+                        StrokeThickness="2">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Entry
+                            x:Name="txtUsername"
+                            FontFamily="RobotoRegular"
+                            HorizontalOptions="FillAndExpand"
+                            Placeholder="{local:Translate lblUsername}"
+                            VerticalOptions="CenterAndExpand" />
+                    </Border>
+
+                </VerticalStackLayout>
+
+                <VerticalStackLayout
+                    Grid.Row="2"
+                    Margin="20,0"
+                    Spacing="10">
+
+                    <Label
+                        Margin="10,0,0,0"
+                        FontFamily="RobotoRegular"
+                        HorizontalOptions="Start"
+                        Text="{local:Translate lblEmail}" />
+
+                    <Border
+                        Padding="10,0"
+                        BackgroundColor="{DynamicResource Gray100}"
+                        Stroke="{DynamicResource Magenta}"
+                        StrokeThickness="2">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Entry
+                            x:Name="txtEmail"
+                            FontFamily="RobotoRegular"
+                            HorizontalOptions="FillAndExpand"
+                            Placeholder="{local:Translate lblEmail}"
+                            VerticalOptions="CenterAndExpand" />
+                    </Border>
+
+                </VerticalStackLayout>
+
+                <VerticalStackLayout
+                    Grid.Row="3"
+                    Margin="20,0"
+                    Spacing="10">
+
+                    <Label
+                        Margin="10,0,0,0"
+                        FontFamily="RobotoRegular"
+                        HorizontalOptions="Start"
+                        Text="{local:Translate lblDob}" />
+
+                    <Border
+                        Padding="10,0"
+                        BackgroundColor="{DynamicResource Gray100}"
+                        Stroke="{DynamicResource Magenta}"
+                        StrokeThickness="2">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Grid>
+                            <Label
+                                x:Name="lblDob"
+                                Margin="10,0,0,0"
+                                FontFamily="RobotoRegular"
+                                HorizontalOptions="Start"
+                                Text="{local:Translate lblDob}"
+                                VerticalOptions="CenterAndExpand" />
+
+                            <DatePicker
+                                x:Name="dpDob"
+                                DateSelected="DpDob_DateSelected"
+                                HorizontalOptions="FillAndExpand"
+                                Opacity="0" />
+
+                        </Grid>
+                    </Border>
+
+                </VerticalStackLayout>
+
+                <Grid
+                    Grid.Row="4"
+                    Margin="20,0"
+                    ColumnDefinitions="*,*,*"
+                    ColumnSpacing="20">
+
+                    <VerticalStackLayout
+                        Grid.Column="0"
+                        Margin="0"
+                        Spacing="10">
+
+                        <Label
+                            Margin="10,0,0,0"
+                            FontFamily="RobotoRegular"
+                            HorizontalOptions="Start"
+                            Text="{local:Translate lblAge}" />
+
+                        <Border
+                            Padding="10,0"
+                            BackgroundColor="{DynamicResource Gray100}"
+                            Stroke="{DynamicResource Magenta}"
+                            StrokeThickness="2">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10" />
+                            </Border.StrokeShape>
+                            <Entry
+                                x:Name="txtAge"
+                                FontFamily="RobotoRegular"
+                                HorizontalOptions="FillAndExpand"
+                                Keyboard="Numeric"
+                                Placeholder="{local:Translate lblAge}"
+                                VerticalOptions="CenterAndExpand" />
+                        </Border>
+
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout
+                        Grid.Column="1"
+                        Margin="0"
+                        Spacing="10">
+
+                        <Label
+                            Margin="10,0,0,0"
+                            FontFamily="RobotoRegular"
+                            HorizontalOptions="Start"
+                            Text="{local:Translate lblHeight}" />
+
+                        <Border
+                            Padding="10,0"
+                            BackgroundColor="{DynamicResource Gray100}"
+                            Stroke="{DynamicResource Magenta}"
+                            StrokeThickness="2">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10" />
+                            </Border.StrokeShape>
+                            <Entry
+                                x:Name="txtHeight"
+                                FontFamily="RobotoRegular"
+                                HorizontalOptions="FillAndExpand"
+                                Keyboard="Numeric"
+                                Placeholder="{local:Translate lblHeight}"
+                                VerticalOptions="CenterAndExpand" />
+                        </Border>
+
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout
+                        Grid.Column="2"
+                        Margin="0"
+                        Spacing="10">
+
+                        <Label
+                            Margin="10,0,0,0"
+                            FontFamily="RobotoRegular"
+                            HorizontalOptions="Start"
+                            Text="{local:Translate lblWeight}" />
+
+                        <Border
+                            Padding="10,0"
+                            BackgroundColor="{DynamicResource Gray100}"
+                            Stroke="{DynamicResource Magenta}"
+                            StrokeThickness="2">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10" />
+                            </Border.StrokeShape>
+                            <Entry
+                                x:Name="txtWeight"
+                                FontFamily="RobotoRegular"
+                                HorizontalOptions="FillAndExpand"
+                                Keyboard="Numeric"
+                                Placeholder="{local:Translate lblWeight}"
+                                VerticalOptions="CenterAndExpand" />
+                        </Border>
+
+                    </VerticalStackLayout>
+
+                </Grid>
+
+                <VerticalStackLayout
+                    Grid.Row="5"
+                    Margin="20,0"
+                    Spacing="10">
+
+                    <Label
+                        Margin="10,0,0,0"
+                        FontFamily="RobotoRegular"
+                        HorizontalOptions="Start"
+                        Text="{local:Translate lblDiabetesType}" />
+
+                    <Border
+                        Padding="10,0"
+                        BackgroundColor="{DynamicResource Gray100}"
+                        Stroke="{DynamicResource Magenta}"
+                        StrokeThickness="2">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Picker
+                            x:Name="pkDiabetesType"
+                            FontFamily="RobotoRegular"
+                            HorizontalOptions="FillAndExpand"
+                            SelectedIndex="0"
+                            VerticalOptions="CenterAndExpand">
+                            <Picker.Items>
+                                <x:String>Normal</x:String>
+                                <x:String>Type A</x:String>
+                                <x:String>Type B</x:String>
+                                <x:String>Prediabetes</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </Border>
+
+                </VerticalStackLayout>
+
+                <VerticalStackLayout
+                    Grid.Row="6"
+                    Margin="20,0"
+                    Spacing="10">
+
+                    <Label
+                        Margin="10,0,0,0"
+                        FontFamily="RobotoRegular"
+                        HorizontalOptions="Start"
+                        Text="{local:Translate lblPassword}" />
+
+                    <Border
+                        Padding="10,0"
+                        BackgroundColor="{DynamicResource Gray100}"
+                        Stroke="{DynamicResource Magenta}"
+                        StrokeThickness="2">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Entry
+                            x:Name="txtPassword"
+                            FontFamily="RobotoRegular"
+                            HorizontalOptions="FillAndExpand"
+                            IsPassword="True"
+                            Placeholder="{local:Translate lblPassword}"
+                            VerticalOptions="CenterAndExpand" />
+                    </Border>
+
+                </VerticalStackLayout>
+
+                <Button
+                    Grid.Row="7"
+                    Margin="50,0,50,10"
+                    BackgroundColor="{DynamicResource Magenta}"
+                    Clicked="BtnSignup_Clicked"
+                    FontFamily="RobotoBold"
+                    FontSize="22"
+                    HorizontalOptions="FillAndExpand"
+                    Text="{local:Translate lblSignUp}"
+                    TextColor="{DynamicResource White}" />
+
+            </Grid>
+
+        </ScrollView>
+
+    </Grid>
+
+</ContentPage>

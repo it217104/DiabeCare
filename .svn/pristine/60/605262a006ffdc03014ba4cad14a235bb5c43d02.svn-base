@@ -1,0 +1,145 @@
+using DiabeCare.Models;
+using DiabeCare.Utilities;
+using Newtonsoft.Json;
+
+namespace DiabeCare.Views;
+
+public partial class Signup : ContentPage
+{
+    #region Objects
+    private int Id = 0;
+    private UserDetail mUserDetail = new();
+    private List<UserDetail> mUserDetails = new();
+    #endregion
+
+    #region Constructor
+    public Signup()
+    {
+        InitializeComponent();
+    }
+    #endregion
+
+    #region Methods
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        var users = Preferences.Get("Users", null);
+        if (users.IsNotNullOrEmptyOrWhiteSpace())
+        {
+            mUserDetails = JsonConvert.DeserializeObject<List<UserDetail>>(users);
+            if (mUserDetails != null && mUserDetails.Count > 0)
+            {
+                Id = mUserDetails.LastOrDefault().Id;
+            }
+        }
+        dpDob.MaximumDate = DateTime.Now.AddDays(-1);
+    }
+
+    private async Task<bool> Validation()
+    {
+        bool result = false;
+        try
+        {
+            if (txtUsername.Text.IsNullOrEmptyOrWhiteSpace())
+            {
+                await App.Current.MainPage.DisplayAlert("Alert!", "Username is required.", "OK");
+            }
+            else if (txtEmail.Text.IsNullOrEmptyOrWhiteSpace())
+            {
+                await App.Current.MainPage.DisplayAlert("Alert!", "Email is required.", "OK");
+            }
+            else if (txtEmail.Text.IsNotNullOrEmptyOrWhiteSpace() && !Utility.EmailRegex.IsMatch(txtEmail.Text))
+            {
+                await App.Current.MainPage.DisplayAlert("Alert!", "Email is invalid.", "OK");
+            }
+            else if (dpDob.Date.ToString("dd/MM/yyyy") == DateTime.Now.ToString("dd/MM/yyyy"))
+            {
+                await App.Current.MainPage.DisplayAlert("Alert!", "Date of Birth is required.", "OK");
+            }
+            else if (txtAge.Text.IsNullOrEmptyOrWhiteSpace())
+            {
+                await App.Current.MainPage.DisplayAlert("Alert!", "Age is required.", "OK");
+            }
+            else if (txtHeight.Text.IsNullOrEmptyOrWhiteSpace())
+            {
+                await App.Current.MainPage.DisplayAlert("Alert!", "Height is required.", "OK");
+            }
+            else if (txtWeight.Text.IsNullOrEmptyOrWhiteSpace())
+            {
+                await App.Current.MainPage.DisplayAlert("Alert!", "Weight is required.", "OK");
+            }
+            else if (pkDiabetesType.SelectedIndex == -1)
+            {
+                await App.Current.MainPage.DisplayAlert("Alert!", "Choose diabetes type.", "OK");
+            }
+            else if (txtPassword.Text.IsNullOrEmptyOrWhiteSpace())
+            {
+                await App.Current.MainPage.DisplayAlert("Alert!", "Password is required.", "OK");
+            }
+            else
+            {
+                result = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Alert!", $"Validation - {ex.Message}", "OK");
+        }
+        return result;
+    }
+    #endregion
+
+    private async void Back_Tapped(object sender, TappedEventArgs e)
+    {
+        await Utilities.Utility.BounceImage((Image)sender);
+        await Navigation.PopAsync();
+    }
+
+    private async void BtnSignup_Clicked(object sender, EventArgs e)
+    {
+        try
+        {
+            await Utilities.Utility.BounceButton((Button)sender);
+            if (await Validation())
+            {
+                Id++;
+                mUserDetail = new()
+                {
+                    Id = Id,
+                    Username = txtUsername.Text,
+                    Email = txtEmail.Text,
+                    DateOfBirth = dpDob.Date.ToString("dd/MM/yyyy"),
+                    Age = txtAge.Text,
+                    Height = txtHeight.Text,
+                    Weight = txtWeight.Text,
+                    DiabetesType = Convert.ToString(pkDiabetesType.SelectedIndex),
+                    Password = txtPassword.Text
+                };
+                Utility.mUserDetail = mUserDetail;
+                mUserDetails.Add(mUserDetail);
+                string serializeList = JsonConvert.SerializeObject(mUserDetails);
+                Preferences.Set("Users", serializeList);
+                Preferences.Set("username", txtUsername.Text);
+                Preferences.Set("password", txtPassword.Text);
+                Preferences.Set("isremember", true);
+                await App.Current.MainPage.DisplayAlert("Alert!", "Account created successfully.", "OK");
+                App.Current.MainPage = new NavigationPage(new Home());
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Alert!", $"BtnSave - {ex.Message}", "OK");
+        }
+    }
+
+    private void DpDob_DateSelected(object sender, DateChangedEventArgs e)
+    {
+        lblDob.Text = dpDob.Date.ToString("dd/MM/yyyy");
+        int age = 0;
+        age = DateTime.Now.Year - dpDob.Date.Year;
+        if (DateTime.Now.DayOfYear < dpDob.Date.DayOfYear)
+            txtAge.Text = Convert.ToString(age - 1);
+        else
+            txtAge.Text = Convert.ToString(age);
+    }
+}

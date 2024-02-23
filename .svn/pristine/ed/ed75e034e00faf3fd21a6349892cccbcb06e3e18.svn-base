@@ -1,0 +1,172 @@
+using DiabeCare.APIs;
+using DiabeCare.Models;
+using DiabeCare.Utilities;
+using Mopups.Services;
+
+namespace DiabeCare.Views;
+
+public partial class FoodPage : ContentPage
+{
+    #region Objects
+    private SearchInstantResponse searchInstantResponse;
+    private List<InstantCommon> mCommon = new();
+    private List<Branded> mBranded = new();
+    private string FoodType = string.Empty;
+    #endregion
+
+    #region Constructor
+    public FoodPage()
+    {
+        InitializeComponent();
+    }
+    #endregion
+
+    #region Methods
+    private async void OpenFoodPopup(string foodtype)
+    {
+        try
+        {
+            if (foodtype.ToLower() == "common")
+            {
+                var fp = new Popups.FoodPopup(mCommon);
+                fp.IsRefresh += ((sender, EventArgs) =>
+                {
+                    if (sender is InstantCommon common && common != null)
+                    {
+                        txtSearchFood.Text = common.food_name;
+                        txtQty.Text = Convert.ToString(common.serving_qty);
+                    }
+                });
+                await MopupService.Instance.PushAsync(fp);
+            }
+            else if (foodtype.ToLower() == "branded")
+            {
+                var fp = new Popups.FoodPopup(mBranded);
+                fp.IsRefresh += ((sender, EventArgs) =>
+                {
+                    if (sender is Branded branded && branded != null)
+                    {
+                        txtSearchFood.Text = branded.food_name;
+                        txtQty.Text = Convert.ToString(branded.serving_qty);
+                    }
+                });
+                await MopupService.Instance.PushAsync(fp);
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Alert!", $"OpenFoodPopup - {ex.Message}", "OK");
+        }
+    }
+
+    private async Task GetNutrients()
+    {
+        try
+        {
+            aiLoader.IsRunning = aiLoader.IsVisible = true;
+            await Task.Delay(500);
+            Query query = new()
+            {
+                query = $"{txtQty.Text}gr {txtSearchFood.Text}"
+            };
+            var response = await new FoodAPI().GetNatutalNutrients(query);
+            if (response != null && response.foods != null && response.foods.Count > 0)
+            {
+                var food = response.foods.FirstOrDefault();
+                lblCalories.Text = $"{food.nf_calories} Kcal: {food.nf_protein}gr Protein, {food.nf_total_carbohydrate}gr Carbohydrate, {food.nf_total_fat}gr Fat, {food.nf_sugars} Sugar";
+                if (pkFood.SelectedIndex == 0 && food.nf_total_carbohydrate > 30)
+                {
+                    await App.Current.MainPage.DisplayAlert("Alert!", "Carbohydrate Intake for this meal is higher than recommended!", "OK");
+                }
+                if (pkFood.SelectedIndex == 1 && food.nf_total_carbohydrate > 60)
+                {
+                    await App.Current.MainPage.DisplayAlert("Alert!", "Carbohydrate Intake for this meal is higher than recommended!", "OK");
+                }
+            }
+            else
+            {
+                await App.Current.MainPage.DisplayAlert("Alert!", "No data found for this food.", "OK");
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Alert!", $"GetNutrients - {ex.Message}", "OK");
+        }
+        finally { aiLoader.IsRunning = aiLoader.IsVisible = false; }
+    }
+    #endregion
+
+    #region Events
+    private async void Back_Tapped(object sender, TappedEventArgs e)
+    {
+        await Utilities.Utility.BounceImage((Image)sender);
+        await Navigation.PopAsync();
+    }
+
+    private void Down_Tapped(object sender, TappedEventArgs e)
+    {
+        pkFood.Focus();
+    }
+
+    private async void Search_Tapped(object sender, TappedEventArgs e)
+    {
+        try
+        {
+            if (txtSearchFood.Text.IsNotNullOrEmptyOrWhiteSpace())
+            {
+                aiLoader.IsRunning = aiLoader.IsVisible = true;
+                await Task.Delay(500);
+                searchInstantResponse = await new FoodAPI().GetSearchInstant(txtSearchFood.Text);
+                if (searchInstantResponse != null)
+                {
+                    if (searchInstantResponse.common != null && searchInstantResponse.common.Count > 0)
+                    {
+                        mCommon = searchInstantResponse.common;
+                    }
+
+                    if (searchInstantResponse.branded != null && searchInstantResponse.branded.Count > 0)
+                    {
+                        mBranded = searchInstantResponse.branded;
+                    }
+
+                    var result = await App.Current.MainPage.DisplayActionSheet("Select Type", "Cancel", null, "Common", "Branded");
+                    if (result.IsNotNullOrEmptyOrWhiteSpace())
+                    {
+                        OpenFoodPopup(result);
+                    }
+                }
+            }
+            else
+            {
+                await App.Current.MainPage.DisplayAlert("Alert!", "Enter food first.", "OK");
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert("Alert!", $"Search Event - {ex.Message}", "OK");
+        }
+        finally { aiLoader.IsRunning = aiLoader.IsVisible = false; }
+    }
+
+    private async void BtnSave_Clicked(object sender, EventArgs e)
+    {
+        await Utilities.Utility.BounceButton((Button)sender);
+    }
+
+    private async void TxtQty_Completed(object sender, EventArgs e)
+    {
+        if (txtQty.Text.IsNotNullOrEmptyOrWhiteSpace())
+        {
+            await GetNutrients();
+        }
+    }
+
+    private async void TxtQty_Unfocused(object sender, FocusEventArgs e)
+    {
+        if (txtQty.Text.IsNotNullOrEmptyOrWhiteSpace())
+        {
+            await GetNutrients();
+        }
+    }
+    #endregion
+}

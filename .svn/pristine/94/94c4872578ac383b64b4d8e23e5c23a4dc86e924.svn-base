@@ -1,0 +1,21 @@
+namespace DiabeCare.Views;
+
+public partial class Login : ContentPage
+{
+	public Login()
+	{
+		InitializeComponent();
+	}
+
+    private async void Signup_Tapped(object sender, TappedEventArgs e)
+    {
+        await Utilities.Utility.BounceHorizontalSL((HorizontalStackLayout)sender);
+        await Navigation.PushAsync(new Signup());
+    }
+
+    private async void BtnLogin_Clicked(object sender, EventArgs e)
+    {
+        await Utilities.Utility.BounceButton((Button)sender);
+        App.Current.MainPage = new NavigationPage(new Home());
+    }
+}

@@ -1,0 +1,54 @@
+using DiabeCare.Resources.Languages;
+using System.Collections.ObjectModel;
+
+namespace DiabeCare.Views;
+
+public partial class Home : ContentPage
+{
+	public Home()
+	{
+		InitializeComponent();
+	}
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        var menus = new ObservableCollection<Models.HomeMenu>()
+        {
+            new(){ MenuName = AppResource.lblAddActivity, ImageSource = "icon_heartrate.png", ContentPage = new ActivityPage() },
+            new(){ MenuName = AppResource.lblAddWeight, ImageSource = "icon_weighscale.png", ContentPage = new WeightPage() },
+            new(){ MenuName = AppResource.lblAddFood, ImageSource = "icon_dish.png", ContentPage = new FoodPage() },
+            new(){ MenuName = AppResource.lblAddMedicine, ImageSource = "icon_pills.png", ContentPage = new MedicinePage() },
+            new(){ MenuName = AppResource.lblAddGlucose, ImageSource = "icon_diabetes.png", ContentPage = new GlucosePage() },
+            new(){ MenuName = AppResource.lblCalendar, ImageSource = "icon_calendar.png"}
+        };
+        cvMenus.ItemsSource = menus;
+    }
+
+    private async void Logout_Tapped(object sender, TappedEventArgs e)
+    {
+        await Utilities.Utility.BounceImage((Image)sender);
+        var result = await Application.Current.MainPage.DisplayAlert(AppResource.lblConfirm, AppResource.msgLogout, AppResource.btnYes, AppResource.btnNo);
+        if (result)
+        {
+            App.Current.MainPage = new NavigationPage(new Login());
+        }
+    }
+
+    private async void Menu_Tapped(object sender, TappedEventArgs e)
+    {
+        try
+        {
+            var homeMenu = ((Border)sender).BindingContext as Models.HomeMenu;
+            if (homeMenu != null && homeMenu.ContentPage != null)
+            {
+                await Utilities.Utility.BounceBorder((Border)sender);
+                await Navigation.PushAsync(homeMenu.ContentPage);
+            }
+        }
+        catch (Exception ex)
+        {
+            await Application.Current.MainPage.DisplayAlert(AppResource.lblError, $"{ex.Message}", AppResource.btnOk);
+        }
+    }
+}

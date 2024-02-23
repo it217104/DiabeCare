@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="DiabeCare.Views.NotificationPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:DiabeCare.Localization"
+    Title="NotificationPage"
+    NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="50,*">
+
+        <Image
+            Grid.Row="0"
+            Margin="20,0,0,0"
+            HeightRequest="30"
+            HorizontalOptions="Start"
+            Source="icon_backarrow.png"
+            VerticalOptions="Center"
+            WidthRequest="30">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Back_Tapped" />
+            </Image.GestureRecognizers>
+
+        </Image>
+
+        <Label
+            Grid.Row="0"
+            Margin="0"
+            FontFamily="RobotoMedium"
+            FontSize="25"
+            HorizontalOptions="CenterAndExpand"
+            Text="{local:Translate lblNotification}"
+            TextColor="{DynamicResource Magenta}"
+            VerticalOptions="Center" />
+
+        <Grid
+            Grid.Row="1"
+            RowDefinitions="*,Auto,*"
+            RowSpacing="10">
+
+            <Label
+                Grid.Row="0"
+                FontFamily="RobotoBold"
+                FontSize="50"
+                HorizontalOptions="Center"
+                Text="{local:Translate lblAppName}"
+                TextColor="{DynamicResource Magenta}"
+                VerticalOptions="Center" />
+
+            <Grid
+                Grid.Row="1"
+                RowDefinitions="Auto,Auto"
+                RowSpacing="20">
+
+                <VerticalStackLayout
+                    Grid.Row="0"
+                    Margin="20,0"
+                    Spacing="10">
+
+                    <Label
+                        Margin="0,0,0,0"
+                        FontFamily="RobotoRegular"
+                        HorizontalOptions="Start"
+                        Text="{local:Translate lblRepeat}" />
+
+                    <Border
+                        Padding="10,0"
+                        Background="{DynamicResource Gray100}"
+                        Stroke="{DynamicResource Magenta}"
+                        StrokeThickness="2">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="5">
+
+                            <Entry
+                                Grid.Column="0"
+                                FontFamily="RobotoRegular"
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="CenterAndExpand" />
+
+                            <Image
+                                Grid.Column="1"
+                                Margin="0"
+                                HeightRequest="25"
+                                HorizontalOptions="Start"
+                                Source="icon_down.png"
+                                VerticalOptions="Center"
+                                WidthRequest="25">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Down_Tapped" />
+                                </Image.GestureRecognizers>
+                            </Image>
+
+                        </Grid>
+                    </Border>
+
+                </VerticalStackLayout>
+
+                <Grid
+                    Grid.Row="1"
+                    ColumnDefinitions="*,*"
+                    RowDefinitions="Auto,Auto"
+                    RowSpacing="20">
+
+                    <VerticalStackLayout
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Margin="20,0"
+                        Spacing="10">
+
+                        <Label
+                            Margin="10,0,0,0"
+                            FontFamily="RobotoRegular"
+                            HorizontalOptions="Start"
+                            Text="{local:Translate lblHour}" />
+
+                        <Border
+                            Padding="10,0"
+                            BackgroundColor="{DynamicResource Gray100}"
+                            Stroke="{DynamicResource Magenta}"
+                            StrokeThickness="2">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10" />
+                            </Border.StrokeShape>
+
+                            <Entry
+                                FontFamily="RobotoRegular"
+                                HorizontalOptions="FillAndExpand"
+                                Placeholder="{local:Translate lblHour}"
+                                VerticalOptions="CenterAndExpand" />
+                        </Border>
+
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="20,0"
+                        Spacing="10">
+
+                        <Label
+                            Margin="10,0,0,0"
+                            FontFamily="RobotoRegular"
+                            HorizontalOptions="Start"
+                            Text="{local:Translate lblMinutesC}" />
+
+                        <Border
+                            Padding="10,0"
+                            BackgroundColor="{DynamicResource Gray100}"
+                            Stroke="{DynamicResource Magenta}"
+                            StrokeThickness="2">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10" />
+                            </Border.StrokeShape>
+
+                            <Entry
+                                FontFamily="RobotoRegular"
+                                HorizontalOptions="FillAndExpand"
+                                Placeholder="{local:Translate lblMinutesC}"
+                                VerticalOptions="CenterAndExpand" />
+
+                        </Border>
+
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="20,0"
+                        Spacing="10">
+
+                        <Label
+                            Margin="10,0,0,0"
+                            FontFamily="RobotoRegular"
+                            HorizontalOptions="Start"
+                            Text="{local:Translate lblDay}" />
+
+                        <Border
+                            Padding="10,0"
+                            BackgroundColor="{DynamicResource Gray100}"
+                            Stroke="{DynamicResource Magenta}"
+                            StrokeThickness="2">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10" />
+                            </Border.StrokeShape>
+
+                            <Entry
+                                Grid.Column="0"
+                                FontFamily="RobotoRegular"
+                                HorizontalOptions="FillAndExpand"
+                                Placeholder="{local:Translate lblDay}"
+                                VerticalOptions="CenterAndExpand" />
+
+                        </Border>
+
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="20,0"
+                        Spacing="10">
+
+                        <Label
+                            Margin="10,0,0,0"
+                            FontFamily="RobotoRegular"
+                            HorizontalOptions="Start"
+                            Text="{local:Translate lblMonth}" />
+
+                        <Border
+                            Padding="10,0"
+                            BackgroundColor="{DynamicResource Gray100}"
+                            Stroke="{DynamicResource Magenta}"
+                            StrokeThickness="2">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10" />
+                            </Border.StrokeShape>
+
+                            <Entry
+                                FontFamily="RobotoRegular"
+                                HorizontalOptions="FillAndExpand"
+                                Placeholder="{local:Translate lblMonth}"
+                                VerticalOptions="CenterAndExpand" />
+
+                        </Border>
+
+                    </VerticalStackLayout>
+
+                </Grid>
+
+            </Grid>
+
+            <Button
+                Grid.Row="2"
+                Margin="50,0,50,10"
+                BackgroundColor="{DynamicResource Magenta}"
+                Clicked="BtnSave_Clicked"
+                FontFamily="RobotoBold"
+                FontSize="22"
+                HorizontalOptions="FillAndExpand"
+                Text="{local:Translate btnSave}"
+                TextColor="{DynamicResource White}"
+                VerticalOptions="CenterAndExpand" />
+
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

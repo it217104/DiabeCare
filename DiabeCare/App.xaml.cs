@@ -1,0 +1,19 @@
+﻿using DiabeCare.Localization;
+using System.Globalization;
+
+namespace DiabeCare
+{
+    public partial class App : Application
+    {
+        public LocalizationResourceManager LocalizationResourceManager
+        => LocalizationResourceManager.Instance;
+
+        public App()
+        {
+            LocalizationResourceManager.Instance.SetCulture(new CultureInfo("en-US"));
+            InitializeComponent();
+
+            MainPage = new NavigationPage(new Views.Login());
+        }
+    }
+}

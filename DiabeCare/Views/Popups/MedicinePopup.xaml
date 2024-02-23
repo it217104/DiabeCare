@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopup:PopupPage
+    x:Class="DiabeCare.Views.Popups.MedicinePopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:DiabeCare.Localization"
+    xmlns:mopup="clr-namespace:Mopups.Pages;assembly=Mopups"
+    CloseWhenBackgroundIsClicked="False"
+    NavigationPage.HasNavigationBar="False">
+
+    <Border Style="{DynamicResource PopupBorder}">
+
+        <Grid RowDefinitions="Auto,150" RowSpacing="10">
+
+            <Label
+                Grid.Row="0"
+                Margin="0"
+                FontFamily="RobotoMedium"
+                FontSize="16"
+                HorizontalOptions="CenterAndExpand"
+                Text="{local:Translate lblMedicine}"
+                TextColor="{DynamicResource Magenta}"
+                VerticalOptions="Center" />
+
+            <Image
+                Grid.Row="0"
+                Margin="0"
+                HeightRequest="25"
+                HorizontalOptions="End"
+                Source="icon_close.png"
+                VerticalOptions="Center"
+                WidthRequest="25">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Close_Tapped" />
+                </Image.GestureRecognizers>
+            </Image>
+
+            <ListView
+                x:Name="lstMedicine"
+                Grid.Row="1"
+                HasUnevenRows="False"
+                VerticalScrollBarVisibility="Never">
+
+                <ListView.ItemTemplate>
+
+                    <DataTemplate>
+
+                        <ViewCell>
+
+                            <Label
+                                Margin="5"
+                                FontFamily="RobotoMedium"
+                                FontSize="14"
+                                HorizontalOptions="CenterAndExpand"
+                                HorizontalTextAlignment="Center"
+                                Text="{Binding Synonym}"
+                                TextColor="{DynamicResource Magenta}"
+                                VerticalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="ItemSelected_Tapped" />
+                                </Label.GestureRecognizers>
+                            </Label>
+
+                        </ViewCell>
+
+                    </DataTemplate>
+
+                </ListView.ItemTemplate>
+
+            </ListView>
+
+        </Grid>
+
+
+    </Border>
+
+</mopup:PopupPage>

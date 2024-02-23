@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="DiabeCare.Views.WeightPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:DiabeCare.Localization"
+    Title="WeightPage"
+    NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="50,*">
+        <Image
+            Grid.Row="0"
+            Margin="20,0,0,0"
+            HeightRequest="30"
+            HorizontalOptions="Start"
+            Source="icon_backarrow.png"
+            VerticalOptions="Center"
+            WidthRequest="30">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Back_Tapped" />
+            </Image.GestureRecognizers>
+
+        </Image>
+
+        <Label
+            Grid.Row="0"
+            Margin="0"
+            FontFamily="Robotomedium"
+            FontSize="25"
+            HorizontalOptions="CenterAndExpand"
+            Text="{local:Translate lblWeight}"
+            TextColor="{DynamicResource Magenta}"
+            VerticalOptions="Center" />
+
+        <Grid
+            Grid.Row="1"
+            RowDefinitions="*,Auto,*"
+            RowSpacing="10">
+
+            <Label
+                Grid.Row="0"
+                FontFamily="RobotoBold"
+                FontSize="50"
+                HorizontalOptions="CenterAndExpand"
+                Text="{local:Translate lblAppName}"
+                TextColor="{DynamicResource Magenta}"
+                VerticalOptions="Center" />
+
+            <Grid
+                Grid.Row="1"
+                RowDefinitions="Auto,Auto,Auto"
+                RowSpacing="20">
+
+                <Label
+                    x:Name="lblCurWeight"
+                    Grid.Row="0"
+                    Margin="20,0,0,0"
+                    FontFamily="RobotoRegular"
+                    HorizontalOptions="FillAndExpand" />
+
+                <VerticalStackLayout
+                    Grid.Row="1"
+                    Margin="20,0"
+                    Spacing="10">
+
+                    <Label
+                        Margin="10,0,0,0"
+                        FontFamily="RobotoRegular"
+                        HorizontalOptions="Start"
+                        Text="{local:Translate lblNewWeight}" />
+                    <Border
+                        Padding="10"
+                        BackgroundColor="{DynamicResource Gray100}"
+                        Stroke="{DynamicResource Magenta}"
+                        StrokeThickness="2">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="5">
+                            <Entry
+                                x:Name="txtWeight"
+                                Grid.Column="0"
+                                FontFamily="RobotoRegular"
+                                HorizontalOptions="FillAndExpand"
+                                Keyboard="Numeric"
+                                Placeholder="{local:Translate phKg}"
+                                TextChanged="TxtWeight_TextChanged"
+                                VerticalOptions="CenterAndExpand" />
+                        </Grid>
+
+                    </Border>
+
+                </VerticalStackLayout>
+
+                <Label
+                    x:Name="lblLostGaine"
+                    Grid.Row="2"
+                    Margin="20,0,0,0"
+                    FontFamily="RobotoRegular"
+                    HorizontalOptions="FillAndExpand" />
+            </Grid>
+
+            <Button
+                Grid.Row="3"
+                Margin="50,0,50,10"
+                BackgroundColor="{DynamicResource Magenta}"
+                Clicked="BtnSave_Clicked"
+                FontFamily="RobotoBold"
+                FontSize="22"
+                HorizontalOptions="FillAndExpand"
+                Text="{local:Translate btnSave}"
+                TextColor="{DynamicResource White}"
+                VerticalOptions="CenterAndExpand" />
+
+
+        </Grid>
+
+    </Grid>
+
+</ContentPage>
